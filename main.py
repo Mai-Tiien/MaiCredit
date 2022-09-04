@@ -18,6 +18,10 @@ def help_command(message):
 @bot.message_handler(commands=['id'])
 def help_command(message):
     bot.send_message(message.chat.id, "Ваш ID: {test}".format(test=message.chat.id)) 
+    
+@bot.message_handler(commands=['whoiam'])
+def help_command(message):
+    bot.send_message(message.chat.id, "Username: {test}\n First name: {test1}\n Title: {test2}".format(test=message.chat.username, test1=message.chat.first_name, test2=message.chat.title))     
       
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def help_command(message):
