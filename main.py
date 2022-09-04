@@ -21,7 +21,7 @@ def help_command(message):
     
 @bot.message_handler(commands=['whoiam'])
 def help_test(message):
-    bot.send_message(message.chat.id, "Group: {test}\nFirst name: {test1}\nTitle: {test2}".format(test=message.from_user.username, test1=message.from_user.first_name, test2=message.from_user.title))     
+    bot.send_message(message.chat.id, "Group: {test}\nFirst name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2=message.chat.title))     
       
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def help_command(message):
