@@ -1,13 +1,19 @@
 import telebot
 import random
 import os
-import time
+from bs4 import BeautifulSoup
 from flask import Flask, request
 
 APP_NAME='https://maicredit.herokuapp.com/'
 TOKEN = '5769001050:AAE6tjmtU0diovOjnf7rqGQ4p-oPxbGFj14'
 bot = telebot.TeleBot(TOKEN)
 bot.can_join_groups = True
+
+url='https://www.liga.net/tag/frank-valter-shtaynmayer'
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, 'html.parser')
+headlines = soup.find('body').find_all('a', class_='title', limit=5)
 
 server = Flask(__name__)
 
@@ -18,6 +24,15 @@ def help_start(message):
 @bot.message_handler(commands=['id'])
 def help_command(message):
     bot.send_message(message.chat.id, "Ваш ID: {test}".format(test=message.chat.id)) 
+
+@bot.message_handler(commands=['news'])
+def help_news(message):
+    for x in headlines:
+            if x.text.strip() == 'Штайнмайера':
+                bot.reply_to(message, '⚡ '+x.text.strip().replace('Штайнмайера', 'Майя'))
+            else:    
+                bot.reply_to(message, '⚡ '+x.text.strip().replace('Штайнмайер', 'Май'))
+            
     
 @bot.message_handler(commands=['whoiam'])
 def help_test(message):
