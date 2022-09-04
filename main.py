@@ -52,7 +52,7 @@ def help_test(message):
     ]
     emp_list = emp[random.randint(0, 16)]
     emp_type = emp_text[random.randint(0, 25)]
-    bot.send_message(message.chat.id, "Group: {test}\nFirst name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2=emp_list+emp_type))     
+    bot.send_message(message.chat.id, "First name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2='Ви '+emp_list+emp_type))     
       
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def help_command(message):
