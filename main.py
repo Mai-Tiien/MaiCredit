@@ -77,7 +77,7 @@ def maicredit_command(message):
         bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
     if rn <= 2:    
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown") 
-    if rn == 3:  
+    if rn <= 3:  
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")
 
 @server.route('/' + TOKEN, methods=['POST'])
