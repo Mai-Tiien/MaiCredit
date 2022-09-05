@@ -72,12 +72,12 @@ def help_test(message):
       
 @bot.message_handler(commands=['maicredit'])
 def maicredit_command(message):
-    rn = random.randint(1,3) 
-    if rn == 1:
-        bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
-    if rn == 2:    
+    rn = random.randint(1,6) 
+    if rn >= 1:
+        bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 280)), parse_mode="Markdown") 
+    if rn > 4:    
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown") 
-    if rn == 3:  
+    if rn == 6:  
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")
 
 @server.route('/' + TOKEN, methods=['POST'])
