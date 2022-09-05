@@ -31,7 +31,7 @@ def help_news(message):
     rand = random.choice(headlines)
     
     for x in rand: 
-        file_head=('⚡ '+x.text.strip().replace('Штайнмайер', 'Май'))
+        file_head=('⚡ '+x.text.strip().replace('Штайнмайер', 'Май Тієн'))
         bot.reply_to(message, file_head)
             
     
