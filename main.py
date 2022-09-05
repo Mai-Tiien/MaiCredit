@@ -68,17 +68,17 @@ def help_test(message):
     ]
     emp_list = emp[random.randint(0, 16)]
     emp_type = emp_text[random.randint(0, 25)]
-    bot.send_message(message.chat.id, "First name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2='Ви '+emp_list+emp_type))     
+    bot.send_message(message.chat.id, "Name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2='Ви '+emp_list+emp_type))     
       
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def help_command(message):
     if message.text == '/maicredit':
         rn = random.randint(1,4) 
-        if rn >= 1:
+        if rn > 1:
             bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
-        elif rn >= 2:    
+        elif rn > 2:    
             bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown") 
-        elif rn >= 3:  
+        elif rn > 3:  
             bot.reply_to(message, "Ти розчарувати великий вождь! *{name}* зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")
 
 @server.route('/' + TOKEN, methods=['POST'])
