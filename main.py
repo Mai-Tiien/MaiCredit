@@ -10,12 +10,6 @@ TOKEN = '5769001050:AAE6tjmtU0diovOjnf7rqGQ4p-oPxbGFj14'
 bot = telebot.TeleBot(TOKEN)
 bot.can_join_groups = True
 
-url='https://www.liga.net/tag/frank-valter-shtaynmayer'
-response = requests.get(url)
-
-soup = BeautifulSoup(response.text, 'html.parser')
-headlines = soup.find('body').find_all('a', class_='title')
-rand = random.choice(headlines)
 
 server = Flask(__name__)
 
@@ -29,6 +23,13 @@ def help_command(message):
 
 @bot.message_handler(commands=['news'])
 def help_news(message):
+    url='https://www.liga.net/tag/frank-valter-shtaynmayer'
+    response = requests.get(url)
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+    headlines = soup.find('body').find_all('a', class_='title')
+    rand = random.choice(headlines)
+    
     for x in rand: 
         file_head=('⚡ '+x.text.strip().replace('Штайнмайер', 'Май'))
         bot.reply_to(message, file_head)
