@@ -73,14 +73,13 @@ def help_test(message):
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def help_command(message):
     if message.text == '/maicredit':
-        rn = random.randint(1,2) 
-        if rn > 1:
-            bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} соціальних балів МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
-        elif rn < 2:    
-            bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} соціальних балів МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")     
-    elif message.text == 'Май Геній' or 'Май геній' or 'Слава Україні':
-            bot.reply_to(message, "Вітаю *{name}*, ти отримуэш від вождя плюс {num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 80)), parse_mode="Markdown") 
-
+        rn = random.randint(1,4) 
+        if rn >= 1:
+            bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
+        elif rn >= 2:    
+            bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown") 
+        elif rn >= 3:  
+            bot.reply_to(message, "Ти розчарувати великий вождь! *{name}* зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
