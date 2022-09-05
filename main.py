@@ -29,11 +29,9 @@ def help_command(message):
 
 @bot.message_handler(commands=['news'])
 def help_news(message):
-    for x in rand:
-            if x.text.strip() == 'Штайнмайера':
-                bot.reply_to(message, '⚡ '+x.text.strip().replace('Штайнмайера', 'Майя'))
-            else:    
-                bot.reply_to(message, '⚡ '+x.text.strip().replace('Штайнмайер', 'Май'))
+    for x in rand: 
+        file_head=('⚡ '+x.text.strip().replace('Штайнмайер', 'Май'))
+        bot.reply_to(message, file_head)
             
     
 @bot.message_handler(commands=['whoiam'])
