@@ -14,7 +14,8 @@ url='https://www.liga.net/tag/frank-valter-shtaynmayer'
 response = requests.get(url)
 
 soup = BeautifulSoup(response.text, 'html.parser')
-headlines = soup.find('body').find_all('a', class_='title', limit=5)
+headlines = soup.find('body').find_all('a', class_='title')
+rand = random.choice(headlines)
 
 server = Flask(__name__)
 
@@ -28,7 +29,7 @@ def help_command(message):
 
 @bot.message_handler(commands=['news'])
 def help_news(message):
-    for x in headlines:
+    for x in rand:
             if x.text.strip() == 'Штайнмайера':
                 bot.reply_to(message, '⚡ '+x.text.strip().replace('Штайнмайера', 'Майя'))
             else:    
