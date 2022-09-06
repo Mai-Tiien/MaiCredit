@@ -72,7 +72,7 @@ def help_test(message):
       
 @bot.message_handler(commands=['maicredit'])
 def maicredit_command(message):
-    bot.reply_to(message, "*{name}*, Май спить😴, пора баянки...".format(name=message.from_user.username), parse_mode="Markdown")
+    bot.reply_to(message, "*{name}*, ти маєш {num} МайКредит".format(name=message.from_user.first_name, num=random.randint(15, 250)), parse_mode="Markdown")
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
