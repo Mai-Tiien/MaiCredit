@@ -70,9 +70,29 @@ def help_test(message):
     emp_type = emp_text[random.randint(0, 25)]
     bot.send_message(message.chat.id, "Name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2='Ви '+emp_list+emp_type))     
       
+@bot.message_handler(commands=['bavovna']) 
+def bavovna_command(message):
+    url_bavov='https://www.unn.com.ua/uk/search?q=%D0%B1%D0%B0%D0%B2%D0%BE%D0%B2%D0%BD%D0%B0'
+    response_bavov = requests.get(url_bavov)
+
+    rd_soup = BeautifulSoup(response_bavov.text, 'html.parser')
+    bavovna = rd_soup.find('body').find_all('div', class_='b-news-search-title')
+    bavovna_time = rd_soup.find_all('div', class_='b-news-search-date')
+    rand_bavov = random.choice(bavovna), random.choice(bavovna_time)
+
+    for title_bavov in rand_bavov:
+        rand_bavov=('💣 '+ title_bavov.text.strip())
+        bot.reply_to(message, rand_bavov)     
+      
 @bot.message_handler(commands=['maicredit'])
 def maicredit_command(message):
-    bot.reply_to(message, "*{name}*, ти маєш {num} МайКредит".format(name=message.from_user.first_name, num=random.randint(15, 250)), parse_mode="Markdown")
+    rn = random.randint(1,6) 
+    if rn == 1:
+        bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")
+    if rn == 2:    
+        bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown") 
+    if rn >= 3:  
+        bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
