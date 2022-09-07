@@ -72,17 +72,16 @@ def help_test(message):
       
 @bot.message_handler(commands=['bavovna']) 
 def bavovna_command(message):
-    url_bavov='https://www.unn.com.ua/uk/search?q=%D0%B1%D0%B0%D0%B2%D0%BE%D0%B2%D0%BD%D0%B0'
-    response_bavov = requests.get(url_bavov)
+    url_bavov = 'https://www.unn.com.ua/uk/search?q=%D0%B1%D0%B0%D0%B2%D0%BE%D0%B2%D0%BD%D0%B0'
+    res = requests.get(url_bavov)
 
-    rd_soup = BeautifulSoup(response_bavov.text, 'html.parser')
-    bavovna = rd_soup.find('body').find_all('div', class_='b-news-search-title')
-    bavovna_time = rd_soup.find_all('div', class_='b-news-search-date')
-    rand_bavov = random.choice(bavovna), random.choice(bavovna_time)
+    rd_soup = BeautifulSoup(res.text, 'html.parser')
+    bv1 = rd_soup.find_all('div', class_='b-news-search-title')
+    bv2 = random.choice(bv1)
 
-    for title_bavov in rand_bavov:
-        rand_bavov=('💣 '+ title_bavov.text.strip())
-        bot.reply_to(message, rand_bavov)     
+    for text_bv in bv2:
+        bavov = '💣 ' + text_bv.text
+        bot.reply_to(message, bavov)
       
 @bot.message_handler(commands=['maicredit'])
 def maicredit_command(message):
