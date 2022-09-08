@@ -2,8 +2,17 @@ import telebot
 import random
 import requests
 import os
+import sqlite3
 from bs4 import BeautifulSoup
 from flask import Flask, request
+
+connect = sqlite3.connect('users.db', check_same_thread=False)
+cursor = connect.cursor()
+
+def db_table_val(user_id: int, user_name: str, balance: int):
+    cursor.execute('INSERT OR REPLACE INTO login (user_id, user_name, balance) VALUES (?, ?, ?)',
+                   (user_id, user_name, balance))
+    connect.commit() 
 
 APP_NAME='https://maicredit.herokuapp.com/'
 TOKEN = '5769001050:AAE6tjmtU0diovOjnf7rqGQ4p-oPxbGFj14'
@@ -15,7 +24,7 @@ server = Flask(__name__)
 
 @bot.message_handler(commands=['start'])
 def help_start(message):
-    bot.send_message(message.chat.id, "Привіт, свої повідомлення сюди!")          
+    bot.send_message(message.chat.id, "Ведіть запит команд, якій буде виконувати бот!")          
 
 @bot.message_handler(commands=['id'])
 def help_command(message):
@@ -85,13 +94,37 @@ def bavovna_command(message):
       
 @bot.message_handler(commands=['maicredit'])
 def maicredit_command(message):
+    us_id = message.from_user.id
+    us_name = message.from_user.first_name
+    bale = random.randint(15, 250)
     rn = random.randint(1,6) 
+    
+    test = 0
+    
     if rn == 1:
-        bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown")
-    if rn == 2:    
-        bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 100)), parse_mode="Markdown") 
-    if rn >= 3:  
-        bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=random.randint(15, 200)), parse_mode="Markdown") 
+        test -= bale
+        db_table_val(user_id=us_id, user_name=us_name, balance=test)
+        bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
+    
+    if rn == 2: 
+        test -= bale
+        db_table_val(user_id=us_id, user_name=us_name, balance=test)   
+        bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
+    
+    if rn >= 3:
+        test += bale 
+        db_table_val(user_id=us_id, user_name=us_name, balance=test)
+        bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
+
+
+@bot.message_handler(commands=['balance']) 
+def bl_command(message):
+    con = sqlite3.connect('users.db')
+    cursorObj = con.cursor()
+    cursorObj.execute('SELECT user_name, balance FROM login')
+    rows = cursorObj.fetchall()
+    for row in rows:
+        bot.reply_to(message, '*{num1}* {num2} МайКредіт'.format(num1=row[0], num2=row[1]), parse_mode="Markdown")
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
