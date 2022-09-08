@@ -72,8 +72,8 @@ def help_test(message):
       
 @bot.message_handler(commands=['bavovna']) 
 def bavovna_command(message):
-    url_bavov = 'https://www.unn.com.ua/uk/search?q=%D0%B1%D0%B0%D0%B2%D0%BE%D0%B2%D0%BD%D0%B0'
-    res = requests.get(url_bavov)
+    url = 'https://www.unn.com.ua/uk/search?q=%D0%B1%D0%B0%D0%B2%D0%BE%D0%B2%D0%BD%D0%B0'
+    res = requests.get(url)
 
     rd_soup = BeautifulSoup(res.text, 'html.parser')
     bv1 = rd_soup.find_all('div', class_='b-news-search-title')
