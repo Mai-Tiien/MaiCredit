@@ -78,7 +78,16 @@ def help_test(message):
     emp_list = emp[random.randint(0, 16)]
     emp_type = emp_text[random.randint(0, 25)]
     bot.send_message(message.chat.id, "Name: {test1}\nTitle: {test2}".format(test=message.chat.username, test1=message.from_user.first_name, test2='Ви '+emp_list+emp_type))     
-      
+
+def get_coin():
+    pow = sqlite3.connect('users.db')
+    cursorPow = pow.cursor()
+    cursorPow.execute('SELECT user_name, balance FROM login')
+    rows = cursorPow.fetchall()
+    for row in rows:
+        coin = row[1]
+    return coin
+
 @bot.message_handler(commands=['bavovna']) 
 def bavovna_command(message):
     url = 'https://www.unn.com.ua/uk/search?q=%D0%B1%D0%B0%D0%B2%D0%BE%D0%B2%D0%BD%D0%B0'
@@ -97,23 +106,18 @@ def maicredit_command(message):
     us_id = message.from_user.id
     us_name = message.from_user.first_name
     bale = random.randint(15, 250)
-    rn = random.randint(1,6) 
-    
-    test = 0
+    rn = random.randint(1,6)
     
     if rn == 1:
-        test -= bale
-        db_table_val(user_id=us_id, user_name=us_name, balance=test)
+        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
     
-    if rn == 2: 
-        test -= bale
-        db_table_val(user_id=us_id, user_name=us_name, balance=test)   
+    if rn == 2:
+        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
     
     if rn >= 3:
-        test += bale 
-        db_table_val(user_id=us_id, user_name=us_name, balance=test)
+        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
         bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
 
 
