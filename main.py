@@ -123,8 +123,13 @@ def bl_command(message):
     cursorObj = con.cursor()
     cursorObj.execute('SELECT user_name, balance FROM login')
     rows = cursorObj.fetchall()
-    for row in rows:
-        bot.reply_to(message, '*{num1}* {num2} МайКредіт'.format(num1=row[0], num2=row[1]), parse_mode="Markdown")
+    with open("out.txt", "w", encoding='utf-8') as file:
+        for row in rows:    
+            file.write("💸 {row1}, має {row2} МайКредіт\n".format(row1 = row[0], row2 = row[1])) 
+    f = open('out.txt', 'r', encoding='utf-8')
+    a = f.read
+    b = a()
+    bot.reply_to(message, b)
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
