@@ -101,25 +101,33 @@ def bavovna_command(message):
         bavov = '💣 ' + text_bv.text
         bot.reply_to(message, bavov)
       
-@bot.message_handler(commands=['maicredit'])
+@bot.message_handler(content_types=['text'])
 def maicredit_command(message):
     us_id = message.from_user.id
     us_name = message.from_user.first_name
-    bale = random.randint(15, 250)
     rn = random.randint(1,6)
     
-    if rn == 1:
-        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
-        bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
+    if message.text == '/maicredit':
+        if rn == 1:
+            bale = random.randint(15, 200)
+            db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
+            bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
+            
+        if rn == 2:
+            bale = random.randint(15, 100)
+            db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
+            bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
         
-    if rn == 2:
-        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
-        bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
-      
-    if rn >= 3:
+        if rn >= 3:
+            bale = random.randint(15, 250)
+            db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
+            bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
+    elif message.text == 'Май геній':
+        bale = random.randint(15, 250)
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
-        bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
-
+        bot.reply_to(message, "Вітаю *{name}*, ти отримаєш від вождя +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
+    
+        
 @bot.message_handler(commands=['balance']) 
 def bl_command(message):
     con = sqlite3.connect('users.db')
