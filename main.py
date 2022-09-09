@@ -1,4 +1,3 @@
-import re
 import telebot
 import random
 import requests
@@ -126,7 +125,7 @@ def maicredit_command(message):
 def bl_command(message):
     con = sqlite3.connect('users.db')
     cursorObj = con.cursor()
-    cursorObj.execute('SELECT user_name, balance FROM login ORDER BY balance DESC')
+    cursorObj.execute('SELECT user_name, balance FROM login')
     rows = cursorObj.fetchall()
     with open("out.txt", "w", encoding='utf-8') as file:
         for row in rows:    
