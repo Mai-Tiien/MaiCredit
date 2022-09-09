@@ -106,16 +106,19 @@ def maicredit_command(message):
     us_id = message.from_user.id
     us_name = message.from_user.first_name
     rn = random.randint(1,6)
-    bale = random.randint(15, 250)
+   
     if rn == 1:
+        bale = random.randint(15, 200)
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
     
     if rn == 2:
+        bale = random.randint(15, 100)
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
     
     if rn >= 3:
+        bale = random.randint(15, 250)
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
         bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
 
@@ -125,7 +128,7 @@ def maicredit_command(message):
 def bl_command(message):
     con = sqlite3.connect('users.db')
     cursorObj = con.cursor()
-    cursorObj.execute('SELECT user_name, balance FROM login')
+    cursorObj.execute('SELECT user_name, balance FROM login ORDER BY balance DESC')
     rows = cursorObj.fetchall()
     with open("out.txt", "w", encoding='utf-8') as file:
         for row in rows:    
