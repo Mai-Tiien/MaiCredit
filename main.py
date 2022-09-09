@@ -28,7 +28,7 @@ def help_start(message):
 
 @bot.message_handler(commands=['id'])
 def help_command(message):
-    bot.send_message(message.chat.id, "Ваш ID: {test}".format(test=message.from_user.id)) 
+    bot.send_message(message.chat.id, "Ваш ID: {test}".format(test=message.chat.id)) 
 
 @bot.message_handler(commands=['news'])
 def help_news(message):
@@ -82,7 +82,7 @@ def help_test(message):
 def get_coin():
     pow = sqlite3.connect('users.db')
     cursorPow = pow.cursor()
-    cursorPow.execute('SELECT user_name, balance FROM login')
+    cursorPow.execute('SELECT user_name, balance FROM login ORDER BY balance ASC')
     rows = cursorPow.fetchall()
     for row in rows:
         coin = row[1]
@@ -111,13 +111,11 @@ def maicredit_command(message):
     if rn == 1:
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
-       
         
     if rn == 2:
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
-       
-    
+      
     if rn >= 3:
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
         bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
