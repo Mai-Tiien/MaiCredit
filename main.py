@@ -28,7 +28,7 @@ def help_start(message):
 
 @bot.message_handler(commands=['id'])
 def help_command(message):
-    bot.send_message(message.chat.id, "Ваш ID: {test}".format(test=message.chat.id)) 
+    bot.send_message(message.chat.id, "Ваш ID: {test}".format(test=message.from_user.id)) 
 
 @bot.message_handler(commands=['news'])
 def help_news(message):
@@ -111,15 +111,17 @@ def maicredit_command(message):
     if rn == 1:
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
-    
+        bot.delete_message(message.from_user.id, message.message_id + 1)
+        
     if rn == 2:
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
+        bot.delete_message(message.from_user.id, message.message_id + 1)
     
     if rn >= 3:
         db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
         bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
-
+        bot.delete_message(message.from_user.id, message.message_id + 1)
 
 @bot.message_handler(commands=['balance']) 
 def bl_command(message):
@@ -134,6 +136,7 @@ def bl_command(message):
     a = f.read
     b = a()
     bot.reply_to(message, b)
+    bot.delete_message(message.from_user.id, message.message_id + 1)
 
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
