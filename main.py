@@ -15,7 +15,7 @@ def db_table_val(user_id: int, user_name: str, balance: int):
     connect.commit() 
 
 APP_NAME='https://maicredit.herokuapp.com/'
-TOKEN = '5769001050:AAE6tjmtU0diovOjnf7rqGQ4p-oPxbGFj14'
+TOKEN = '5769001050:AAH9LaUlCtOfEEQyjmJprXXgfSg1D65bSB4'
 bot = telebot.TeleBot(TOKEN)
 bot.can_join_groups = True
 
