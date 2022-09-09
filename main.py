@@ -82,7 +82,7 @@ def help_test(message):
 def get_coin():
     pow = sqlite3.connect('users.db')
     cursorPow = pow.cursor()
-    cursorPow.execute('SELECT user_name, balance FROM login ORDER BY balance ASC')
+    cursorPow.execute('SELECT user_name, balance FROM login ORDER BY balance DESC')
     rows = cursorPow.fetchall()
     for row in rows:
         coin = row[1]
@@ -124,7 +124,7 @@ def maicredit_command(message):
 def bl_command(message):
     con = sqlite3.connect('users.db')
     cursorObj = con.cursor()
-    cursorObj.execute('SELECT user_name, balance FROM login ORDER BY balance ASC')
+    cursorObj.execute('SELECT user_name, balance FROM login ORDER BY balance DESC')
     rows = cursorObj.fetchall()
     with open("out.txt", "w", encoding='utf-8') as file:
         for row in rows:    
