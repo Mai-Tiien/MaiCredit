@@ -1,3 +1,4 @@
+import re
 import telebot
 import random
 import requests
@@ -82,7 +83,7 @@ def help_test(message):
 def get_coin():
     pow = sqlite3.connect('users.db')
     cursorPow = pow.cursor()
-    cursorPow.execute('SELECT user_name, balance FROM login ORDER BY balance DESC')
+    cursorPow.execute('SELECT user_name, balance FROM login')
     rows = cursorPow.fetchall()
     for row in rows:
         coin = row[1]
@@ -108,15 +109,15 @@ def maicredit_command(message):
     rn = random.randint(1,10)
     bale = random.randint(15, 250)
     if rn == 1:
-        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
+        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin())
         bot.reply_to(message, "*{name}*, ти розчарувати великий вождь! Святослав зробить пуля тобі в лоб вогонь! Ти втратив -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown")
         
     if rn == 2:
-        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() - bale)
+        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin())
         bot.reply_to(message, "Нажаль *{name}*, твій рейтинг впав на -{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
     
     if rn >= 3:
-        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin() + bale)
+        db_table_val(user_id=us_id, user_name=us_name, balance=get_coin())
         bot.reply_to(message, "Вітаю *{name}*, твій рейтинг піднявся на +{num} МайКредіт".format(name = message.from_user.first_name, num=bale), parse_mode="Markdown") 
 
 
